@@ -81,13 +81,13 @@ public class ModelResource {
     /**
      * {@code GET  /models} : get all the models.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of models in body.
      */
     @GetMapping("/models")
-    public List<Model> getAllModels() {
+    public List<Model> getAllModels(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Models");
-        return modelRepository.findAll();
+        return modelRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -99,7 +99,7 @@ public class ModelResource {
     @GetMapping("/models/{id}")
     public ResponseEntity<Model> getModel(@PathVariable Long id) {
         log.debug("REST request to get Model : {}", id);
-        Optional<Model> model = modelRepository.findById(id);
+        Optional<Model> model = modelRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(model);
     }
 

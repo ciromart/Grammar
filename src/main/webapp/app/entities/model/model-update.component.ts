@@ -11,6 +11,8 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { IModel, Model } from 'app/shared/model/model.model';
 import { ModelService } from './model.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 import { ILmTemplate } from 'app/shared/model/lm-template.model';
 import { LmTemplateService } from 'app/entities/lm-template/lm-template.service';
 
@@ -21,6 +23,8 @@ import { LmTemplateService } from 'app/entities/lm-template/lm-template.service'
 export class ModelUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  users: IUser[];
+
   lmtemplates: ILmTemplate[];
 
   editForm = this.fb.group({
@@ -30,12 +34,14 @@ export class ModelUpdateComponent implements OnInit {
     insertTs: [],
     lastUpdateTs: [],
     activated: [],
+    users: [],
     lmTemplate: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected modelService: ModelService,
+    protected userService: UserService,
     protected lmTemplateService: LmTemplateService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -46,6 +52,13 @@ export class ModelUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ model }) => {
       this.updateForm(model);
     });
+    this.userService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
+      )
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.lmTemplateService
       .query()
       .pipe(
@@ -63,6 +76,7 @@ export class ModelUpdateComponent implements OnInit {
       insertTs: model.insertTs != null ? model.insertTs.format(DATE_TIME_FORMAT) : null,
       lastUpdateTs: model.lastUpdateTs != null ? model.lastUpdateTs.format(DATE_TIME_FORMAT) : null,
       activated: model.activated,
+      users: model.users,
       lmTemplate: model.lmTemplate
     });
   }
@@ -91,6 +105,7 @@ export class ModelUpdateComponent implements OnInit {
       lastUpdateTs:
         this.editForm.get(['lastUpdateTs']).value != null ? moment(this.editForm.get(['lastUpdateTs']).value, DATE_TIME_FORMAT) : undefined,
       activated: this.editForm.get(['activated']).value,
+      users: this.editForm.get(['users']).value,
       lmTemplate: this.editForm.get(['lmTemplate']).value
     };
   }
@@ -111,7 +126,22 @@ export class ModelUpdateComponent implements OnInit {
     this.jhiAlertService.error(errorMessage, null, null);
   }
 
+  trackUserById(index: number, item: IUser) {
+    return item.id;
+  }
+
   trackLmTemplateById(index: number, item: ILmTemplate) {
     return item.id;
+  }
+
+  getSelected(selectedVals: any[], option: any) {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

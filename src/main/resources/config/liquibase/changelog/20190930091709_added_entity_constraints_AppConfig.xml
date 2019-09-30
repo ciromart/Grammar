@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity AppConfig.
+    -->
+    <changeSet id="20190930091709-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="app_config_id"
+                                 baseTableName="app_config_user"
+                                 constraintName="fk_app_config_user_app_config_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_config"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="app_config_user"
+                                 constraintName="fk_app_config_user_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+    </changeSet>
+</databaseChangeLog>

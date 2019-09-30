@@ -26,6 +26,7 @@
             <th><span jhiTranslate="grammarEditorApp.lmTemplate.insertTs">Insert Ts</span></th>
             <th><span jhiTranslate="grammarEditorApp.lmTemplate.lastUpdateTs">Last Update Ts</span></th>
             <th><span jhiTranslate="grammarEditorApp.lmTemplate.activated">Activated</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.user">User</span></th>
             <th></th>
             </tr>
             </thead>
@@ -40,6 +41,11 @@
                 <td>{{lmTemplate.insertTs | date:'medium'}}</td>
                 <td>{{lmTemplate.lastUpdateTs | date:'medium'}}</td>
                 <td>{{lmTemplate.activated}}</td>
+                <td>
+                    <span *ngFor="let user of lmTemplate.users; let last = last">
+                            {{user.id}}{{last ? '' : ', '}}
+                        </span>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

@@ -5,8 +5,12 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { JhiAlertService } from 'ng-jhipster';
 import { IAppConfig, AppConfig } from 'app/shared/model/app-config.model';
 import { AppConfigService } from './app-config.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-app-config-update',
@@ -15,6 +19,8 @@ import { AppConfigService } from './app-config.service';
 export class AppConfigUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  users: IUser[];
+
   editForm = this.fb.group({
     id: [],
     criticalWordsMaxFileSize: [],
@@ -22,16 +28,30 @@ export class AppConfigUpdateComponent implements OnInit {
     additionalContextMaxFileSize: [],
     additionalContextMaxFileWords: [],
     minOccurencyContext: [],
-    windowsMaxWords: []
+    windowsMaxWords: [],
+    users: []
   });
 
-  constructor(protected appConfigService: AppConfigService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected jhiAlertService: JhiAlertService,
+    protected appConfigService: AppConfigService,
+    protected userService: UserService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ appConfig }) => {
       this.updateForm(appConfig);
     });
+    this.userService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
+      )
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(appConfig: IAppConfig) {
@@ -42,7 +62,8 @@ export class AppConfigUpdateComponent implements OnInit {
       additionalContextMaxFileSize: appConfig.additionalContextMaxFileSize,
       additionalContextMaxFileWords: appConfig.additionalContextMaxFileWords,
       minOccurencyContext: appConfig.minOccurencyContext,
-      windowsMaxWords: appConfig.windowsMaxWords
+      windowsMaxWords: appConfig.windowsMaxWords,
+      users: appConfig.users
     });
   }
 
@@ -69,7 +90,8 @@ export class AppConfigUpdateComponent implements OnInit {
       additionalContextMaxFileSize: this.editForm.get(['additionalContextMaxFileSize']).value,
       additionalContextMaxFileWords: this.editForm.get(['additionalContextMaxFileWords']).value,
       minOccurencyContext: this.editForm.get(['minOccurencyContext']).value,
-      windowsMaxWords: this.editForm.get(['windowsMaxWords']).value
+      windowsMaxWords: this.editForm.get(['windowsMaxWords']).value,
+      users: this.editForm.get(['users']).value
     };
   }
 
@@ -84,5 +106,23 @@ export class AppConfigUpdateComponent implements OnInit {
 
   protected onSaveError() {
     this.isSaving = false;
+  }
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackUserById(index: number, item: IUser) {
+    return item.id;
+  }
+
+  getSelected(selectedVals: any[], option: any) {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

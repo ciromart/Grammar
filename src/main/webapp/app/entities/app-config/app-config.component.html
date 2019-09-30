@@ -24,6 +24,7 @@
             <th><span jhiTranslate="grammarEditorApp.appConfig.additionalContextMaxFileWords">Additional Context Max File Words</span></th>
             <th><span jhiTranslate="grammarEditorApp.appConfig.minOccurencyContext">Min Occurency Context</span></th>
             <th><span jhiTranslate="grammarEditorApp.appConfig.windowsMaxWords">Windows Max Words</span></th>
+            <th><span jhiTranslate="grammarEditorApp.appConfig.user">User</span></th>
             <th></th>
             </tr>
             </thead>
@@ -36,6 +37,11 @@
                 <td>{{appConfig.additionalContextMaxFileWords}}</td>
                 <td>{{appConfig.minOccurencyContext}}</td>
                 <td>{{appConfig.windowsMaxWords}}</td>
+                <td>
+                    <span *ngFor="let user of appConfig.users; let last = last">
+                            {{user.id}}{{last ? '' : ', '}}
+                        </span>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

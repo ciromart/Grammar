@@ -21,7 +21,8 @@
       "additionalContextMaxFileSize": "Additional Context Max File Size",
       "additionalContextMaxFileWords": "Additional Context Max File Words",
       "minOccurencyContext": "Min Occurency Context",
-      "windowsMaxWords": "Windows Max Words"
+      "windowsMaxWords": "Windows Max Words",
+      "user": "User"
     }
   }
 }

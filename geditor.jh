@@ -40,14 +40,27 @@ entity AppConfig {
     minOccurencyContext Long
     windowsMaxWords Long
 }
- relationship OneToMany {
+
+relationship OneToMany {
  	LmTemplate to Model{lmTemplate}
- }
+}
  
- relationship OneToMany {
+relationship OneToMany {
  	Model to CompilationLog{model}
- }
+}
  
- relationship OneToMany {
+relationship OneToMany {
  	CompilationLog to CompilationFile {compilationLog}
- }
+}
+ 
+relationship ManyToMany {
+ 	AppConfig to User {appConfigs}
+}
+ 
+relationship ManyToMany {
+ 	LmTemplate to User {lmTemplates}
+}
+ 
+relationship ManyToMany {
+ 	Model to User {models}
+}

@@ -1,3 +1,5 @@
+import { IUser } from 'app/core/user/user.model';
+
 export interface IAppConfig {
   id?: number;
   criticalWordsMaxFileSize?: number;
@@ -6,6 +8,7 @@ export interface IAppConfig {
   additionalContextMaxFileWords?: number;
   minOccurencyContext?: number;
   windowsMaxWords?: number;
+  users?: IUser[];
 }
 
 export class AppConfig implements IAppConfig {
@@ -16,6 +19,7 @@ export class AppConfig implements IAppConfig {
     public additionalContextMaxFileSize?: number,
     public additionalContextMaxFileWords?: number,
     public minOccurencyContext?: number,
-    public windowsMaxWords?: number
+    public windowsMaxWords?: number,
+    public users?: IUser[]
   ) {}
 }

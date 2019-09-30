@@ -29,6 +29,12 @@
                 <dd>
                     <span>{{appConfig.windowsMaxWords}}</span>
                 </dd>
+                <dt><span jhiTranslate="grammarEditorApp.appConfig.user">User</span></dt>
+                <dd>
+                    <span *ngFor="let user of appConfig.users; let last = last">
+                        {{user.id}}{{last ? '' : ', '}}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"

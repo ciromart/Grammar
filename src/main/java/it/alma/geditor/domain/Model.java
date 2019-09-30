@@ -39,6 +39,12 @@ public class Model implements Serializable {
     @OneToMany(mappedBy = "model")
     private Set<CompilationLog> compilationLogs = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "model_user",
+               joinColumns = @JoinColumn(name = "model_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("models")
     private LmTemplate lmTemplate;
@@ -140,6 +146,29 @@ public class Model implements Serializable {
 
     public void setCompilationLogs(Set<CompilationLog> compilationLogs) {
         this.compilationLogs = compilationLogs;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Model users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Model addUser(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public Model removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public LmTemplate getLmTemplate() {

@@ -81,13 +81,13 @@ public class AppConfigResource {
     /**
      * {@code GET  /app-configs} : get all the appConfigs.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of appConfigs in body.
      */
     @GetMapping("/app-configs")
-    public List<AppConfig> getAllAppConfigs() {
+    public List<AppConfig> getAllAppConfigs(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all AppConfigs");
-        return appConfigRepository.findAll();
+        return appConfigRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -99,7 +99,7 @@ public class AppConfigResource {
     @GetMapping("/app-configs/{id}")
     public ResponseEntity<AppConfig> getAppConfig(@PathVariable Long id) {
         log.debug("REST request to get AppConfig : {}", id);
-        Optional<AppConfig> appConfig = appConfigRepository.findById(id);
+        Optional<AppConfig> appConfig = appConfigRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(appConfig);
     }
 
