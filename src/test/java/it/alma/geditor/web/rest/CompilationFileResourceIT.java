@@ -1,9 +1,19 @@
 package it.alma.geditor.web.rest;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.domain.CompilationFile;
-import it.alma.geditor.repository.CompilationFileRepository;
-import it.alma.geditor.web.rest.errors.ExceptionTranslator;
+import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,14 +28,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.List;
-
-import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.CompilationFile;
+import it.alma.geditor.repository.CompilationFileRepository;
+import it.alma.geditor.web.rest.errors.ExceptionTranslator;
 
 /**
  * Integration tests for the {@link CompilationFileResource} REST controller.
@@ -77,8 +83,8 @@ public class CompilationFileResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompilationFile createEntity(EntityManager em) {
-        CompilationFile compilationFile = new CompilationFile()
-            .path(DEFAULT_PATH);
+        CompilationFile compilationFile = new CompilationFile();
+        compilationFile.setPath(DEFAULT_PATH);
         return compilationFile;
     }
     /**
@@ -88,8 +94,8 @@ public class CompilationFileResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompilationFile createUpdatedEntity(EntityManager em) {
-        CompilationFile compilationFile = new CompilationFile()
-            .path(UPDATED_PATH);
+        CompilationFile compilationFile = new CompilationFile();
+        compilationFile.setPath(DEFAULT_PATH);
         return compilationFile;
     }
 
@@ -184,8 +190,7 @@ public class CompilationFileResourceIT {
         CompilationFile updatedCompilationFile = compilationFileRepository.findById(compilationFile.getId()).get();
         // Disconnect from session so that the updates on updatedCompilationFile are not directly saved in db
         em.detach(updatedCompilationFile);
-        updatedCompilationFile
-            .path(UPDATED_PATH);
+        updatedCompilationFile.setPath(UPDATED_PATH);
 
         restCompilationFileMockMvc.perform(put("/api/compilation-files")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

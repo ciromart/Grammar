@@ -40,26 +40,21 @@ public class LmTemplateResourceIT {
 
     private static final Long DEFAULT_LANG_CODE = 1L;
     private static final Long UPDATED_LANG_CODE = 2L;
-    private static final Long SMALLER_LANG_CODE = 1L - 1L;
 
     private static final Long DEFAULT_COUNTRY_CODE = 1L;
     private static final Long UPDATED_COUNTRY_CODE = 2L;
-    private static final Long SMALLER_COUNTRY_CODE = 1L - 1L;
 
     private static final Long DEFAULT_LM_STANDARD_CODE = 1L;
     private static final Long UPDATED_LM_STANDARD_CODE = 2L;
-    private static final Long SMALLER_LM_STANDARD_CODE = 1L - 1L;
 
     private static final String DEFAULT_PATH = "AAAAAAAAAA";
     private static final String UPDATED_PATH = "BBBBBBBBBB";
 
     private static final Instant DEFAULT_INSERT_TS = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_INSERT_TS = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-    private static final Instant SMALLER_INSERT_TS = Instant.ofEpochMilli(-1L);
 
     private static final Instant DEFAULT_LAST_UPDATE_TS = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_UPDATE_TS = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-    private static final Instant SMALLER_LAST_UPDATE_TS = Instant.ofEpochMilli(-1L);
 
     private static final Boolean DEFAULT_ACTIVATED = false;
     private static final Boolean UPDATED_ACTIVATED = true;
@@ -105,15 +100,15 @@ public class LmTemplateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static LmTemplate createEntity(EntityManager em) {
-        LmTemplate lmTemplate = new LmTemplate()
-            .name(DEFAULT_NAME)
-            .langCode(DEFAULT_LANG_CODE)
-            .countryCode(DEFAULT_COUNTRY_CODE)
-            .lmStandardCode(DEFAULT_LM_STANDARD_CODE)
-            .path(DEFAULT_PATH)
-            .insertTs(DEFAULT_INSERT_TS)
-            .lastUpdateTs(DEFAULT_LAST_UPDATE_TS)
-            .activated(DEFAULT_ACTIVATED);
+        LmTemplate lmTemplate = new LmTemplate();
+        lmTemplate.setName(DEFAULT_NAME);
+        lmTemplate.setLangCode(DEFAULT_LANG_CODE);
+        lmTemplate.setCountryCode(DEFAULT_COUNTRY_CODE);
+        lmTemplate.setLmStandardCode(DEFAULT_LM_STANDARD_CODE);
+        lmTemplate.setPath(DEFAULT_PATH);
+        lmTemplate.setInsertTs(DEFAULT_INSERT_TS);
+        lmTemplate.setLastUpdateTs(DEFAULT_LAST_UPDATE_TS);
+        lmTemplate.setActivated(DEFAULT_ACTIVATED);
         return lmTemplate;
     }
     /**
@@ -123,15 +118,15 @@ public class LmTemplateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static LmTemplate createUpdatedEntity(EntityManager em) {
-        LmTemplate lmTemplate = new LmTemplate()
-            .name(UPDATED_NAME)
-            .langCode(UPDATED_LANG_CODE)
-            .countryCode(UPDATED_COUNTRY_CODE)
-            .lmStandardCode(UPDATED_LM_STANDARD_CODE)
-            .path(UPDATED_PATH)
-            .insertTs(UPDATED_INSERT_TS)
-            .lastUpdateTs(UPDATED_LAST_UPDATE_TS)
-            .activated(UPDATED_ACTIVATED);
+        LmTemplate lmTemplate = new LmTemplate();
+        lmTemplate.setName(DEFAULT_NAME);
+        lmTemplate.setLangCode(DEFAULT_LANG_CODE);
+        lmTemplate.setCountryCode(DEFAULT_COUNTRY_CODE);
+        lmTemplate.setLmStandardCode(DEFAULT_LM_STANDARD_CODE);
+        lmTemplate.setPath(DEFAULT_PATH);
+        lmTemplate.setInsertTs(DEFAULT_INSERT_TS);
+        lmTemplate.setLastUpdateTs(DEFAULT_LAST_UPDATE_TS);
+        lmTemplate.setActivated(DEFAULT_ACTIVATED);
         return lmTemplate;
     }
 
@@ -162,7 +157,7 @@ public class LmTemplateResourceIT {
         assertThat(testLmTemplate.getPath()).isEqualTo(DEFAULT_PATH);
         assertThat(testLmTemplate.getInsertTs()).isEqualTo(DEFAULT_INSERT_TS);
         assertThat(testLmTemplate.getLastUpdateTs()).isEqualTo(DEFAULT_LAST_UPDATE_TS);
-        assertThat(testLmTemplate.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
+        assertThat(testLmTemplate.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
     }
 
     @Test
@@ -247,15 +242,14 @@ public class LmTemplateResourceIT {
         LmTemplate updatedLmTemplate = lmTemplateRepository.findById(lmTemplate.getId()).get();
         // Disconnect from session so that the updates on updatedLmTemplate are not directly saved in db
         em.detach(updatedLmTemplate);
-        updatedLmTemplate
-            .name(UPDATED_NAME)
-            .langCode(UPDATED_LANG_CODE)
-            .countryCode(UPDATED_COUNTRY_CODE)
-            .lmStandardCode(UPDATED_LM_STANDARD_CODE)
-            .path(UPDATED_PATH)
-            .insertTs(UPDATED_INSERT_TS)
-            .lastUpdateTs(UPDATED_LAST_UPDATE_TS)
-            .activated(UPDATED_ACTIVATED);
+        updatedLmTemplate.setName(DEFAULT_NAME);
+        updatedLmTemplate.setLangCode(DEFAULT_LANG_CODE);
+        updatedLmTemplate.setCountryCode(DEFAULT_COUNTRY_CODE);
+        updatedLmTemplate.setLmStandardCode(DEFAULT_LM_STANDARD_CODE);
+        updatedLmTemplate.setPath(DEFAULT_PATH);
+        updatedLmTemplate.setInsertTs(DEFAULT_INSERT_TS);
+        updatedLmTemplate.setLastUpdateTs(DEFAULT_LAST_UPDATE_TS);
+        updatedLmTemplate.setActivated(DEFAULT_ACTIVATED);
 
         restLmTemplateMockMvc.perform(put("/api/lm-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -273,7 +267,7 @@ public class LmTemplateResourceIT {
         assertThat(testLmTemplate.getPath()).isEqualTo(UPDATED_PATH);
         assertThat(testLmTemplate.getInsertTs()).isEqualTo(UPDATED_INSERT_TS);
         assertThat(testLmTemplate.getLastUpdateTs()).isEqualTo(UPDATED_LAST_UPDATE_TS);
-        assertThat(testLmTemplate.isActivated()).isEqualTo(UPDATED_ACTIVATED);
+        assertThat(testLmTemplate.getActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 
     @Test
