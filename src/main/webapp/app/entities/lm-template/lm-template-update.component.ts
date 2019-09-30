@@ -5,10 +5,14 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { JhiAlertService } from 'ng-jhipster';
 import { ILmTemplate, LmTemplate } from 'app/shared/model/lm-template.model';
 import { LmTemplateService } from './lm-template.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-lm-template-update',
@@ -16,6 +20,8 @@ import { LmTemplateService } from './lm-template.service';
 })
 export class LmTemplateUpdateComponent implements OnInit {
   isSaving: boolean;
+
+  users: IUser[];
 
   editForm = this.fb.group({
     id: [],
@@ -26,16 +32,30 @@ export class LmTemplateUpdateComponent implements OnInit {
     path: [],
     insertTs: [],
     lastUpdateTs: [],
-    activated: []
+    activated: [],
+    users: []
   });
 
-  constructor(protected lmTemplateService: LmTemplateService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected jhiAlertService: JhiAlertService,
+    protected lmTemplateService: LmTemplateService,
+    protected userService: UserService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ lmTemplate }) => {
       this.updateForm(lmTemplate);
     });
+    this.userService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
+      )
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(lmTemplate: ILmTemplate) {
@@ -48,7 +68,8 @@ export class LmTemplateUpdateComponent implements OnInit {
       path: lmTemplate.path,
       insertTs: lmTemplate.insertTs != null ? lmTemplate.insertTs.format(DATE_TIME_FORMAT) : null,
       lastUpdateTs: lmTemplate.lastUpdateTs != null ? lmTemplate.lastUpdateTs.format(DATE_TIME_FORMAT) : null,
-      activated: lmTemplate.activated
+      activated: lmTemplate.activated,
+      users: lmTemplate.users
     });
   }
 
@@ -78,7 +99,8 @@ export class LmTemplateUpdateComponent implements OnInit {
       insertTs: this.editForm.get(['insertTs']).value != null ? moment(this.editForm.get(['insertTs']).value, DATE_TIME_FORMAT) : undefined,
       lastUpdateTs:
         this.editForm.get(['lastUpdateTs']).value != null ? moment(this.editForm.get(['lastUpdateTs']).value, DATE_TIME_FORMAT) : undefined,
-      activated: this.editForm.get(['activated']).value
+      activated: this.editForm.get(['activated']).value,
+      users: this.editForm.get(['users']).value
     };
   }
 
@@ -93,5 +115,23 @@ export class LmTemplateUpdateComponent implements OnInit {
 
   protected onSaveError() {
     this.isSaving = false;
+  }
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackUserById(index: number, item: IUser) {
+    return item.id;
+  }
+
+  getSelected(selectedVals: any[], option: any) {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

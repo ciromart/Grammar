@@ -38,6 +38,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label jhiTranslate="grammarEditorApp.model.user" for="field_users">User</label>
+                    <select class="form-control" id="field_users" multiple name="users" formControlName="users">
+                        <option [ngValue]="getSelected(editForm.get('users').value, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="grammarEditorApp.model.lmTemplate" for="field_lmTemplate">Lm Template</label>
                     <select class="form-control" id="field_lmTemplate" name="lmTemplate" formControlName="lmTemplate">
                         <option [ngValue]="null"></option>

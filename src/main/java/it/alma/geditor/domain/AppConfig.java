@@ -3,6 +3,8 @@ package it.alma.geditor.domain;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A AppConfig.
@@ -34,6 +36,12 @@ public class AppConfig implements Serializable {
 
     @Column(name = "windows_max_words")
     private Long windowsMaxWords;
+
+    @ManyToMany
+    @JoinTable(name = "app_config_user",
+               joinColumns = @JoinColumn(name = "app_config_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -120,6 +128,29 @@ public class AppConfig implements Serializable {
 
     public void setWindowsMaxWords(Long windowsMaxWords) {
         this.windowsMaxWords = windowsMaxWords;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public AppConfig users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public AppConfig addUser(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public AppConfig removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

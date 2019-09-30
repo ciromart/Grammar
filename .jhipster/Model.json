@@ -30,6 +30,14 @@
             "relationshipName": "compilationLog"
         },
         {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "models",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
             "relationshipType": "many-to-one",
             "otherEntityName": "lmTemplate",
             "otherEntityRelationshipName": "model",

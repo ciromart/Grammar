@@ -47,6 +47,12 @@ public class LmTemplate implements Serializable {
     @OneToMany(mappedBy = "lmTemplate")
     private Set<Model> models = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "lm_template_user",
+               joinColumns = @JoinColumn(name = "lm_template_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -183,6 +189,29 @@ public class LmTemplate implements Serializable {
 
     public void setModels(Set<Model> models) {
         this.models = models;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public LmTemplate users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public LmTemplate addUser(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public LmTemplate removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

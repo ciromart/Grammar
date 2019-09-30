@@ -1,6 +1,5 @@
 package it.alma.geditor.web.rest;
 
-import it.alma.geditor.annotations.security.IsAdminPreAutorized;
 import it.alma.geditor.domain.LmTemplate;
 import it.alma.geditor.repository.LmTemplateRepository;
 import it.alma.geditor.web.rest.errors.BadRequestAlertException;
@@ -46,7 +45,6 @@ public class LmTemplateResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new lmTemplate, or with status {@code 400 (Bad Request)} if the lmTemplate has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @IsAdminPreAutorized
     @PostMapping("/lm-templates")
     public ResponseEntity<LmTemplate> createLmTemplate(@RequestBody LmTemplate lmTemplate) throws URISyntaxException {
         log.debug("REST request to save LmTemplate : {}", lmTemplate);
@@ -68,7 +66,6 @@ public class LmTemplateResource {
      * or with status {@code 500 (Internal Server Error)} if the lmTemplate couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @IsAdminPreAutorized
     @PutMapping("/lm-templates")
     public ResponseEntity<LmTemplate> updateLmTemplate(@RequestBody LmTemplate lmTemplate) throws URISyntaxException {
         log.debug("REST request to update LmTemplate : {}", lmTemplate);
@@ -84,14 +81,13 @@ public class LmTemplateResource {
     /**
      * {@code GET  /lm-templates} : get all the lmTemplates.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of lmTemplates in body.
      */
-    @IsAdminPreAutorized
     @GetMapping("/lm-templates")
-    public List<LmTemplate> getAllLmTemplates() {
+    public List<LmTemplate> getAllLmTemplates(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all LmTemplates");
-        return lmTemplateRepository.findAll();
+        return lmTemplateRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -100,11 +96,10 @@ public class LmTemplateResource {
      * @param id the id of the lmTemplate to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the lmTemplate, or with status {@code 404 (Not Found)}.
      */
-    @IsAdminPreAutorized
     @GetMapping("/lm-templates/{id}")
     public ResponseEntity<LmTemplate> getLmTemplate(@PathVariable Long id) {
         log.debug("REST request to get LmTemplate : {}", id);
-        Optional<LmTemplate> lmTemplate = lmTemplateRepository.findById(id);
+        Optional<LmTemplate> lmTemplate = lmTemplateRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(lmTemplate);
     }
 
@@ -114,7 +109,6 @@ public class LmTemplateResource {
      * @param id the id of the lmTemplate to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @IsAdminPreAutorized
     @DeleteMapping("/lm-templates/{id}")
     public ResponseEntity<Void> deleteLmTemplate(@PathVariable Long id) {
         log.debug("REST request to delete LmTemplate : {}", id);

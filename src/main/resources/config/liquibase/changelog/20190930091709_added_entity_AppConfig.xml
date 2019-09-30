@@ -40,6 +40,17 @@
 
     <changeSet id="20190930091709-1-relations" author="jhipster">
 
+        <createTable tableName="app_config_user">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="app_config_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="app_config_id, user_id" tableName="app_config_user"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

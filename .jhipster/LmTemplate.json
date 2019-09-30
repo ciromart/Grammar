@@ -40,6 +40,14 @@
             "otherEntityName": "model",
             "otherEntityRelationshipName": "lmTemplate",
             "relationshipName": "model"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "lmTemplates",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190930091705",

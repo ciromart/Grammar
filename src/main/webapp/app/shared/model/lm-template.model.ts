@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { IModel } from 'app/shared/model/model.model';
+import { IUser } from 'app/core/user/user.model';
 
 export interface ILmTemplate {
   id?: number;
@@ -12,6 +13,7 @@ export interface ILmTemplate {
   lastUpdateTs?: Moment;
   activated?: boolean;
   models?: IModel[];
+  users?: IUser[];
 }
 
 export class LmTemplate implements ILmTemplate {
@@ -25,7 +27,8 @@ export class LmTemplate implements ILmTemplate {
     public insertTs?: Moment,
     public lastUpdateTs?: Moment,
     public activated?: boolean,
-    public models?: IModel[]
+    public models?: IModel[],
+    public users?: IUser[]
   ) {
     this.activated = this.activated || false;
   }

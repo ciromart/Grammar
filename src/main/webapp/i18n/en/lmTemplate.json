@@ -24,7 +24,8 @@
       "insertTs": "Insert Ts",
       "lastUpdateTs": "Last Update Ts",
       "activated": "Activated",
-      "model": "Model"
+      "model": "Model",
+      "user": "User"
     }
   }
 }

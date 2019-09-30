@@ -37,6 +37,12 @@
                 <dd>
                     <span>{{lmTemplate.activated}}</span>
                 </dd>
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.user">User</span></dt>
+                <dd>
+                    <span *ngFor="let user of lmTemplate.users; let last = last">
+                        {{user.id}}{{last ? '' : ', '}}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"
