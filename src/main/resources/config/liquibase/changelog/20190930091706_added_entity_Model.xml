@@ -28,6 +28,9 @@
             <column name="last_update_ts" type="datetime">
                 <constraints nullable="true" />
             </column>
+            <column name="activated" type="boolean">
+                <constraints nullable="true" />
+            </column>
             <column name="lm_template_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -60,6 +63,7 @@
             <column name="mail_network_name" type="string"/>
             <column name="insert_ts" type="datetime"/>
             <column name="last_update_ts" type="datetime"/>
+            <column name="activated" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

@@ -20,6 +20,7 @@
       "mailNetworkName": "Mail Network Name",
       "insertTs": "Insert Ts",
       "lastUpdateTs": "Last Update Ts",
+      "activated": "Activated",
       "compilationLog": "Compilation Log",
       "lmTemplate": "Lm Template"
     }

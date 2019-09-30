@@ -7,6 +7,7 @@ entity LmTemplate {
     path String
     insertTs Instant
     lastUpdateTs Instant
+    activated Boolean
 }
 
 entity Model {
@@ -15,6 +16,7 @@ entity Model {
     mailNetworkName String
     insertTs Instant
     lastUpdateTs Instant
+    activated Boolean
 }
 
 entity CompilationLog {

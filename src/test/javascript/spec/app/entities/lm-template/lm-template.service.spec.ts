@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new LmTemplate(0, 'AAAAAAA', 0, 0, 0, 'AAAAAAA', currentDate, currentDate);
+      elemDefault = new LmTemplate(0, 'AAAAAAA', 0, 0, 0, 'AAAAAAA', currentDate, currentDate, false);
     });
 
     describe('Service methods', () => {
@@ -80,7 +80,8 @@ describe('Service Tests', () => {
             lmStandardCode: 1,
             path: 'BBBBBB',
             insertTs: currentDate.format(DATE_TIME_FORMAT),
-            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT)
+            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT),
+            activated: true
           },
           elemDefault
         );
@@ -110,7 +111,8 @@ describe('Service Tests', () => {
             lmStandardCode: 1,
             path: 'BBBBBB',
             insertTs: currentDate.format(DATE_TIME_FORMAT),
-            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT)
+            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT),
+            activated: true
           },
           elemDefault
         );

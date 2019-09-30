@@ -10,6 +10,7 @@ export interface ILmTemplate {
   path?: string;
   insertTs?: Moment;
   lastUpdateTs?: Moment;
+  activated?: boolean;
   models?: IModel[];
 }
 
@@ -23,6 +24,9 @@ export class LmTemplate implements ILmTemplate {
     public path?: string,
     public insertTs?: Moment,
     public lastUpdateTs?: Moment,
+    public activated?: boolean,
     public models?: IModel[]
-  ) {}
+  ) {
+    this.activated = this.activated || false;
+  }
 }

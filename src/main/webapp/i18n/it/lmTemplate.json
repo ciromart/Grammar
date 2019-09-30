@@ -23,6 +23,7 @@
       "path": "Path",
       "insertTs": "Insert Ts",
       "lastUpdateTs": "Last Update Ts",
+      "activated": "Activated",
       "model": "Model"
     }
   }
