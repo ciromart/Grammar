@@ -22,6 +22,7 @@
             <th><span jhiTranslate="grammarEditorApp.model.mailNetworkName">Mail Network Name</span></th>
             <th><span jhiTranslate="grammarEditorApp.model.insertTs">Insert Ts</span></th>
             <th><span jhiTranslate="grammarEditorApp.model.lastUpdateTs">Last Update Ts</span></th>
+            <th><span jhiTranslate="grammarEditorApp.model.activated">Activated</span></th>
             <th><span jhiTranslate="grammarEditorApp.model.lmTemplate">Lm Template</span></th>
             <th></th>
             </tr>
@@ -33,6 +34,7 @@
                 <td>{{model.mailNetworkName}}</td>
                 <td>{{model.insertTs | date:'medium'}}</td>
                 <td>{{model.lastUpdateTs | date:'medium'}}</td>
+                <td>{{model.activated}}</td>
                 <td>
                     <div *ngIf="model.lmTemplate">
                         <a [routerLink]="['/lm-template', model.lmTemplate?.id, 'view' ]" >{{model.lmTemplate?.id}}</a>

@@ -1,17 +1,11 @@
 package it.alma.geditor.domain;
 
+import javax.persistence.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * A LmTemplate.
@@ -46,6 +40,9 @@ public class LmTemplate implements Serializable {
 
     @Column(name = "last_update_ts")
     private Instant lastUpdateTs;
+
+    @Column(name = "activated")
+    private Boolean activated;
 
     @OneToMany(mappedBy = "lmTemplate")
     private Set<Model> models = new HashSet<>();
@@ -150,6 +147,19 @@ public class LmTemplate implements Serializable {
         this.lastUpdateTs = lastUpdateTs;
     }
 
+    public Boolean isActivated() {
+        return activated;
+    }
+
+    public LmTemplate activated(Boolean activated) {
+        this.activated = activated;
+        return this;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
+    }
+
     public Set<Model> getModels() {
         return models;
     }
@@ -203,6 +213,7 @@ public class LmTemplate implements Serializable {
             ", path='" + getPath() + "'" +
             ", insertTs='" + getInsertTs() + "'" +
             ", lastUpdateTs='" + getLastUpdateTs() + "'" +
+            ", activated='" + isActivated() + "'" +
             "}";
     }
 }

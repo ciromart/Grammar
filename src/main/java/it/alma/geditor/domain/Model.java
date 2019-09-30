@@ -1,19 +1,12 @@
 package it.alma.geditor.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A Model.
@@ -39,6 +32,9 @@ public class Model implements Serializable {
 
     @Column(name = "last_update_ts")
     private Instant lastUpdateTs;
+
+    @Column(name = "activated")
+    private Boolean activated;
 
     @OneToMany(mappedBy = "model")
     private Set<CompilationLog> compilationLogs = new HashSet<>();
@@ -108,6 +104,19 @@ public class Model implements Serializable {
         this.lastUpdateTs = lastUpdateTs;
     }
 
+    public Boolean isActivated() {
+        return activated;
+    }
+
+    public Model activated(Boolean activated) {
+        this.activated = activated;
+        return this;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
+    }
+
     public Set<CompilationLog> getCompilationLogs() {
         return compilationLogs;
     }
@@ -171,6 +180,7 @@ public class Model implements Serializable {
             ", mailNetworkName='" + getMailNetworkName() + "'" +
             ", insertTs='" + getInsertTs() + "'" +
             ", lastUpdateTs='" + getLastUpdateTs() + "'" +
+            ", activated='" + isActivated() + "'" +
             "}";
     }
 }

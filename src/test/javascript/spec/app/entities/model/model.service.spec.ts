@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Model(0, 'AAAAAAA', 'AAAAAAA', currentDate, currentDate);
+      elemDefault = new Model(0, 'AAAAAAA', 'AAAAAAA', currentDate, currentDate, false);
     });
 
     describe('Service methods', () => {
@@ -77,7 +77,8 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             mailNetworkName: 'BBBBBB',
             insertTs: currentDate.format(DATE_TIME_FORMAT),
-            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT)
+            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT),
+            activated: true
           },
           elemDefault
         );
@@ -104,7 +105,8 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             mailNetworkName: 'BBBBBB',
             insertTs: currentDate.format(DATE_TIME_FORMAT),
-            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT)
+            lastUpdateTs: currentDate.format(DATE_TIME_FORMAT),
+            activated: true
           },
           elemDefault
         );

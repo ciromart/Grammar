@@ -25,7 +25,8 @@ export class LmTemplateUpdateComponent implements OnInit {
     lmStandardCode: [],
     path: [],
     insertTs: [],
-    lastUpdateTs: []
+    lastUpdateTs: [],
+    activated: []
   });
 
   constructor(protected lmTemplateService: LmTemplateService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -46,7 +47,8 @@ export class LmTemplateUpdateComponent implements OnInit {
       lmStandardCode: lmTemplate.lmStandardCode,
       path: lmTemplate.path,
       insertTs: lmTemplate.insertTs != null ? lmTemplate.insertTs.format(DATE_TIME_FORMAT) : null,
-      lastUpdateTs: lmTemplate.lastUpdateTs != null ? lmTemplate.lastUpdateTs.format(DATE_TIME_FORMAT) : null
+      lastUpdateTs: lmTemplate.lastUpdateTs != null ? lmTemplate.lastUpdateTs.format(DATE_TIME_FORMAT) : null,
+      activated: lmTemplate.activated
     });
   }
 
@@ -75,7 +77,8 @@ export class LmTemplateUpdateComponent implements OnInit {
       path: this.editForm.get(['path']).value,
       insertTs: this.editForm.get(['insertTs']).value != null ? moment(this.editForm.get(['insertTs']).value, DATE_TIME_FORMAT) : undefined,
       lastUpdateTs:
-        this.editForm.get(['lastUpdateTs']).value != null ? moment(this.editForm.get(['lastUpdateTs']).value, DATE_TIME_FORMAT) : undefined
+        this.editForm.get(['lastUpdateTs']).value != null ? moment(this.editForm.get(['lastUpdateTs']).value, DATE_TIME_FORMAT) : undefined,
+      activated: this.editForm.get(['activated']).value
     };
   }
 

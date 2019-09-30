@@ -16,6 +16,10 @@
         {
             "fieldName": "lastUpdateTs",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "activated",
+            "fieldType": "Boolean"
         }
     ],
     "relationships": [

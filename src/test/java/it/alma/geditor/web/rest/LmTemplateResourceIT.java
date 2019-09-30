@@ -1,21 +1,9 @@
 package it.alma.geditor.web.rest;
 
-import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.LmTemplate;
+import it.alma.geditor.repository.LmTemplateRepository;
+import it.alma.geditor.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,10 +18,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.domain.LmTemplate;
-import it.alma.geditor.repository.LmTemplateRepository;
-import it.alma.geditor.web.rest.errors.ExceptionTranslator;
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link LmTemplateResource} REST controller.
@@ -66,6 +60,9 @@ public class LmTemplateResourceIT {
     private static final Instant DEFAULT_LAST_UPDATE_TS = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_UPDATE_TS = Instant.now().truncatedTo(ChronoUnit.MILLIS);
     private static final Instant SMALLER_LAST_UPDATE_TS = Instant.ofEpochMilli(-1L);
+
+    private static final Boolean DEFAULT_ACTIVATED = false;
+    private static final Boolean UPDATED_ACTIVATED = true;
 
     @Autowired
     private LmTemplateRepository lmTemplateRepository;
@@ -115,7 +112,8 @@ public class LmTemplateResourceIT {
             .lmStandardCode(DEFAULT_LM_STANDARD_CODE)
             .path(DEFAULT_PATH)
             .insertTs(DEFAULT_INSERT_TS)
-            .lastUpdateTs(DEFAULT_LAST_UPDATE_TS);
+            .lastUpdateTs(DEFAULT_LAST_UPDATE_TS)
+            .activated(DEFAULT_ACTIVATED);
         return lmTemplate;
     }
     /**
@@ -132,7 +130,8 @@ public class LmTemplateResourceIT {
             .lmStandardCode(UPDATED_LM_STANDARD_CODE)
             .path(UPDATED_PATH)
             .insertTs(UPDATED_INSERT_TS)
-            .lastUpdateTs(UPDATED_LAST_UPDATE_TS);
+            .lastUpdateTs(UPDATED_LAST_UPDATE_TS)
+            .activated(UPDATED_ACTIVATED);
         return lmTemplate;
     }
 
@@ -163,6 +162,7 @@ public class LmTemplateResourceIT {
         assertThat(testLmTemplate.getPath()).isEqualTo(DEFAULT_PATH);
         assertThat(testLmTemplate.getInsertTs()).isEqualTo(DEFAULT_INSERT_TS);
         assertThat(testLmTemplate.getLastUpdateTs()).isEqualTo(DEFAULT_LAST_UPDATE_TS);
+        assertThat(testLmTemplate.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
     }
 
     @Test
@@ -202,7 +202,8 @@ public class LmTemplateResourceIT {
             .andExpect(jsonPath("$.[*].lmStandardCode").value(hasItem(DEFAULT_LM_STANDARD_CODE.intValue())))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH.toString())))
             .andExpect(jsonPath("$.[*].insertTs").value(hasItem(DEFAULT_INSERT_TS.toString())))
-            .andExpect(jsonPath("$.[*].lastUpdateTs").value(hasItem(DEFAULT_LAST_UPDATE_TS.toString())));
+            .andExpect(jsonPath("$.[*].lastUpdateTs").value(hasItem(DEFAULT_LAST_UPDATE_TS.toString())))
+            .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())));
     }
     
     @Test
@@ -222,7 +223,8 @@ public class LmTemplateResourceIT {
             .andExpect(jsonPath("$.lmStandardCode").value(DEFAULT_LM_STANDARD_CODE.intValue()))
             .andExpect(jsonPath("$.path").value(DEFAULT_PATH.toString()))
             .andExpect(jsonPath("$.insertTs").value(DEFAULT_INSERT_TS.toString()))
-            .andExpect(jsonPath("$.lastUpdateTs").value(DEFAULT_LAST_UPDATE_TS.toString()));
+            .andExpect(jsonPath("$.lastUpdateTs").value(DEFAULT_LAST_UPDATE_TS.toString()))
+            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()));
     }
 
     @Test
@@ -252,7 +254,8 @@ public class LmTemplateResourceIT {
             .lmStandardCode(UPDATED_LM_STANDARD_CODE)
             .path(UPDATED_PATH)
             .insertTs(UPDATED_INSERT_TS)
-            .lastUpdateTs(UPDATED_LAST_UPDATE_TS);
+            .lastUpdateTs(UPDATED_LAST_UPDATE_TS)
+            .activated(UPDATED_ACTIVATED);
 
         restLmTemplateMockMvc.perform(put("/api/lm-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -270,6 +273,7 @@ public class LmTemplateResourceIT {
         assertThat(testLmTemplate.getPath()).isEqualTo(UPDATED_PATH);
         assertThat(testLmTemplate.getInsertTs()).isEqualTo(UPDATED_INSERT_TS);
         assertThat(testLmTemplate.getLastUpdateTs()).isEqualTo(UPDATED_LAST_UPDATE_TS);
+        assertThat(testLmTemplate.isActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 
     @Test

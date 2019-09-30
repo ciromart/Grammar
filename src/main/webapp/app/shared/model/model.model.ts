@@ -8,6 +8,7 @@ export interface IModel {
   mailNetworkName?: string;
   insertTs?: Moment;
   lastUpdateTs?: Moment;
+  activated?: boolean;
   compilationLogs?: ICompilationLog[];
   lmTemplate?: ILmTemplate;
 }
@@ -19,7 +20,10 @@ export class Model implements IModel {
     public mailNetworkName?: string,
     public insertTs?: Moment,
     public lastUpdateTs?: Moment,
+    public activated?: boolean,
     public compilationLogs?: ICompilationLog[],
     public lmTemplate?: ILmTemplate
-  ) {}
+  ) {
+    this.activated = this.activated || false;
+  }
 }
