@@ -29,6 +29,7 @@ export class ModelUpdateComponent implements OnInit {
     mailNetworkName: [],
     insertTs: [],
     lastUpdateTs: [],
+    activated: [],
     lmTemplate: []
   });
 
@@ -61,6 +62,7 @@ export class ModelUpdateComponent implements OnInit {
       mailNetworkName: model.mailNetworkName,
       insertTs: model.insertTs != null ? model.insertTs.format(DATE_TIME_FORMAT) : null,
       lastUpdateTs: model.lastUpdateTs != null ? model.lastUpdateTs.format(DATE_TIME_FORMAT) : null,
+      activated: model.activated,
       lmTemplate: model.lmTemplate
     });
   }
@@ -88,6 +90,7 @@ export class ModelUpdateComponent implements OnInit {
       insertTs: this.editForm.get(['insertTs']).value != null ? moment(this.editForm.get(['insertTs']).value, DATE_TIME_FORMAT) : undefined,
       lastUpdateTs:
         this.editForm.get(['lastUpdateTs']).value != null ? moment(this.editForm.get(['lastUpdateTs']).value, DATE_TIME_FORMAT) : undefined,
+      activated: this.editForm.get(['activated']).value,
       lmTemplate: this.editForm.get(['lmTemplate']).value
     };
   }

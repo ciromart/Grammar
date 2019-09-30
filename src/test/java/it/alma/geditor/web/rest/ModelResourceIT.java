@@ -1,21 +1,9 @@
 package it.alma.geditor.web.rest;
 
-import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.Model;
+import it.alma.geditor.repository.ModelRepository;
+import it.alma.geditor.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,10 +18,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.domain.Model;
-import it.alma.geditor.repository.ModelRepository;
-import it.alma.geditor.web.rest.errors.ExceptionTranslator;
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link ModelResource} REST controller.
@@ -54,6 +48,9 @@ public class ModelResourceIT {
     private static final Instant DEFAULT_LAST_UPDATE_TS = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_UPDATE_TS = Instant.now().truncatedTo(ChronoUnit.MILLIS);
     private static final Instant SMALLER_LAST_UPDATE_TS = Instant.ofEpochMilli(-1L);
+
+    private static final Boolean DEFAULT_ACTIVATED = false;
+    private static final Boolean UPDATED_ACTIVATED = true;
 
     @Autowired
     private ModelRepository modelRepository;
@@ -100,7 +97,8 @@ public class ModelResourceIT {
             .name(DEFAULT_NAME)
             .mailNetworkName(DEFAULT_MAIL_NETWORK_NAME)
             .insertTs(DEFAULT_INSERT_TS)
-            .lastUpdateTs(DEFAULT_LAST_UPDATE_TS);
+            .lastUpdateTs(DEFAULT_LAST_UPDATE_TS)
+            .activated(DEFAULT_ACTIVATED);
         return model;
     }
     /**
@@ -114,7 +112,8 @@ public class ModelResourceIT {
             .name(UPDATED_NAME)
             .mailNetworkName(UPDATED_MAIL_NETWORK_NAME)
             .insertTs(UPDATED_INSERT_TS)
-            .lastUpdateTs(UPDATED_LAST_UPDATE_TS);
+            .lastUpdateTs(UPDATED_LAST_UPDATE_TS)
+            .activated(UPDATED_ACTIVATED);
         return model;
     }
 
@@ -142,6 +141,7 @@ public class ModelResourceIT {
         assertThat(testModel.getMailNetworkName()).isEqualTo(DEFAULT_MAIL_NETWORK_NAME);
         assertThat(testModel.getInsertTs()).isEqualTo(DEFAULT_INSERT_TS);
         assertThat(testModel.getLastUpdateTs()).isEqualTo(DEFAULT_LAST_UPDATE_TS);
+        assertThat(testModel.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
     }
 
     @Test
@@ -178,7 +178,8 @@ public class ModelResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].mailNetworkName").value(hasItem(DEFAULT_MAIL_NETWORK_NAME.toString())))
             .andExpect(jsonPath("$.[*].insertTs").value(hasItem(DEFAULT_INSERT_TS.toString())))
-            .andExpect(jsonPath("$.[*].lastUpdateTs").value(hasItem(DEFAULT_LAST_UPDATE_TS.toString())));
+            .andExpect(jsonPath("$.[*].lastUpdateTs").value(hasItem(DEFAULT_LAST_UPDATE_TS.toString())))
+            .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())));
     }
     
     @Test
@@ -195,7 +196,8 @@ public class ModelResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.mailNetworkName").value(DEFAULT_MAIL_NETWORK_NAME.toString()))
             .andExpect(jsonPath("$.insertTs").value(DEFAULT_INSERT_TS.toString()))
-            .andExpect(jsonPath("$.lastUpdateTs").value(DEFAULT_LAST_UPDATE_TS.toString()));
+            .andExpect(jsonPath("$.lastUpdateTs").value(DEFAULT_LAST_UPDATE_TS.toString()))
+            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()));
     }
 
     @Test
@@ -222,7 +224,8 @@ public class ModelResourceIT {
             .name(UPDATED_NAME)
             .mailNetworkName(UPDATED_MAIL_NETWORK_NAME)
             .insertTs(UPDATED_INSERT_TS)
-            .lastUpdateTs(UPDATED_LAST_UPDATE_TS);
+            .lastUpdateTs(UPDATED_LAST_UPDATE_TS)
+            .activated(UPDATED_ACTIVATED);
 
         restModelMockMvc.perform(put("/api/models")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -237,6 +240,7 @@ public class ModelResourceIT {
         assertThat(testModel.getMailNetworkName()).isEqualTo(UPDATED_MAIL_NETWORK_NAME);
         assertThat(testModel.getInsertTs()).isEqualTo(UPDATED_INSERT_TS);
         assertThat(testModel.getLastUpdateTs()).isEqualTo(UPDATED_LAST_UPDATE_TS);
+        assertThat(testModel.isActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 
     @Test
