@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="compilationFile">
+            <h2><span jhiTranslate="grammarEditorApp.compilationFile.detail.title">Compilation File</span> {{compilationFile.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="grammarEditorApp.compilationFile.path">Path</span></dt>
+                <dd>
+                    <span>{{compilationFile.path}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.compilationFile.compilationLog">Compilation Log</span></dt>
+                <dd>
+                    <div *ngIf="compilationFile.compilationLog">
+                        <a [routerLink]="['/compilation-log', compilationFile.compilationLog?.id, 'view']">{{compilationFile.compilationLog?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/compilation-file', compilationFile.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

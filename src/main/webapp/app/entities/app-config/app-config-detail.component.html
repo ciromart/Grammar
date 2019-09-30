@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="appConfig">
+            <h2><span jhiTranslate="grammarEditorApp.appConfig.detail.title">App Config</span> {{appConfig.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="grammarEditorApp.appConfig.criticalWordsMaxFileSize">Critical Words Max File Size</span></dt>
+                <dd>
+                    <span>{{appConfig.criticalWordsMaxFileSize}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.appConfig.criticalWordsMaxWords">Critical Words Max Words</span></dt>
+                <dd>
+                    <span>{{appConfig.criticalWordsMaxWords}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.appConfig.additionalContextMaxFileSize">Additional Context Max File Size</span></dt>
+                <dd>
+                    <span>{{appConfig.additionalContextMaxFileSize}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.appConfig.additionalContextMaxFileWords">Additional Context Max File Words</span></dt>
+                <dd>
+                    <span>{{appConfig.additionalContextMaxFileWords}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.appConfig.minOccurencyContext">Min Occurency Context</span></dt>
+                <dd>
+                    <span>{{appConfig.minOccurencyContext}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.appConfig.windowsMaxWords">Windows Max Words</span></dt>
+                <dd>
+                    <span>{{appConfig.windowsMaxWords}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/app-config', appConfig.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

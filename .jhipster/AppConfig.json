@@ -1,0 +1,39 @@
+{
+    "name": "AppConfig",
+    "fields": [
+        {
+            "fieldName": "criticalWordsMaxFileSize",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "criticalWordsMaxWords",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "additionalContextMaxFileSize",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "additionalContextMaxFileWords",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "minOccurencyContext",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "windowsMaxWords",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190930091709",
+    "entityTableName": "app_config",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

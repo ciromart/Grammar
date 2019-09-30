@@ -1,0 +1,69 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="grammarEditorApp.lmTemplate.home.title">Lm Templates</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-lm-template" [routerLink]="['/lm-template/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="grammarEditorApp.lmTemplate.home.createLabel">
+            Create a new Lm Template
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="lmTemplates?.length === 0">
+        <span jhiTranslate="grammarEditorApp.lmTemplate.home.notFound">No lmTemplates found</span>
+    </div>
+    <div class="table-responsive" *ngIf="lmTemplates?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.name">Name</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.langCode">Lang Code</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.countryCode">Country Code</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.lmStandardCode">Lm Standard Code</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.path">Path</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.insertTs">Insert Ts</span></th>
+            <th><span jhiTranslate="grammarEditorApp.lmTemplate.lastUpdateTs">Last Update Ts</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let lmTemplate of lmTemplates ;trackBy: trackId">
+                <td><a [routerLink]="['/lm-template', lmTemplate.id, 'view' ]">{{lmTemplate.id}}</a></td>
+                <td>{{lmTemplate.name}}</td>
+                <td>{{lmTemplate.langCode}}</td>
+                <td>{{lmTemplate.countryCode}}</td>
+                <td>{{lmTemplate.lmStandardCode}}</td>
+                <td>{{lmTemplate.path}}</td>
+                <td>{{lmTemplate.insertTs | date:'medium'}}</td>
+                <td>{{lmTemplate.lastUpdateTs | date:'medium'}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/lm-template', lmTemplate.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/lm-template', lmTemplate.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/lm-template', { outlets: { popup: lmTemplate.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

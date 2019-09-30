@@ -1,0 +1,45 @@
+{
+    "name": "CompilationLog",
+    "fields": [
+        {
+            "fieldName": "insertTs",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastUpdatTs",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rpkLink",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "compilationFile",
+            "otherEntityRelationshipName": "compilationLog",
+            "relationshipName": "compilationFile"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "model",
+            "otherEntityRelationshipName": "compilationLog",
+            "relationshipName": "model",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190930091707",
+    "entityTableName": "compilation_log",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

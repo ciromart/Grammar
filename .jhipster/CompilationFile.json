@@ -1,0 +1,27 @@
+{
+    "name": "CompilationFile",
+    "fields": [
+        {
+            "fieldName": "path",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "compilationLog",
+            "otherEntityRelationshipName": "compilationFile",
+            "relationshipName": "compilationLog",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190930091708",
+    "entityTableName": "compilation_file",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

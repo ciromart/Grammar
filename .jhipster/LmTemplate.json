@@ -1,0 +1,50 @@
+{
+    "name": "LmTemplate",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "langCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "countryCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "lmStandardCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "path",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "insertTs",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastUpdateTs",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "model",
+            "otherEntityRelationshipName": "lmTemplate",
+            "relationshipName": "model"
+        }
+    ],
+    "changelogDate": "20190930091705",
+    "entityTableName": "lm_template",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,45 @@
+{
+    "name": "Model",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mailNetworkName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "insertTs",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastUpdateTs",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "compilationLog",
+            "otherEntityRelationshipName": "model",
+            "relationshipName": "compilationLog"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "lmTemplate",
+            "otherEntityRelationshipName": "model",
+            "relationshipName": "lmTemplate",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190930091706",
+    "entityTableName": "model",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
