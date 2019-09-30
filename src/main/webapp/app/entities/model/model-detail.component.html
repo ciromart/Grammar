@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="model">
+            <h2><span jhiTranslate="grammarEditorApp.model.detail.title">Model</span> {{model.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="grammarEditorApp.model.name">Name</span></dt>
+                <dd>
+                    <span>{{model.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.model.mailNetworkName">Mail Network Name</span></dt>
+                <dd>
+                    <span>{{model.mailNetworkName}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.model.insertTs">Insert Ts</span></dt>
+                <dd>
+                    <span>{{model.insertTs}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.model.lastUpdateTs">Last Update Ts</span></dt>
+                <dd>
+                    <span>{{model.lastUpdateTs}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.model.lmTemplate">Lm Template</span></dt>
+                <dd>
+                    <div *ngIf="model.lmTemplate">
+                        <a [routerLink]="['/lm-template', model.lmTemplate?.id, 'view']">{{model.lmTemplate?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/model', model.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

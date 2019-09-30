@@ -1,0 +1,23 @@
+{
+  "grammarEditorApp": {
+    "compilationFile": {
+      "home": {
+        "title": "CompilationFiles",
+        "createLabel": "Genera un nuovo Compilation File",
+        "createOrEditLabel": "Genera o modifica un Compilation File",
+        "notFound": "No Compilation Files found"
+      },
+      "created": "&Egrave; stato generato un nuovo Compilation File con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Compilation File identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Compilation File con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Compilation File {{ id }}?"
+      },
+      "detail": {
+        "title": "Compilation File"
+      },
+      "path": "Path",
+      "compilationLog": "Compilation Log"
+    }
+  }
+}

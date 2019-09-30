@@ -1,0 +1,29 @@
+{
+  "grammarEditorApp": {
+    "lmTemplate": {
+      "home": {
+        "title": "LmTemplates",
+        "createLabel": "Genera un nuovo Lm Template",
+        "createOrEditLabel": "Genera o modifica un Lm Template",
+        "notFound": "No Lm Templates found"
+      },
+      "created": "&Egrave; stato generato un nuovo Lm Template con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Lm Template identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Lm Template con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Lm Template {{ id }}?"
+      },
+      "detail": {
+        "title": "Lm Template"
+      },
+      "name": "Name",
+      "langCode": "Lang Code",
+      "countryCode": "Country Code",
+      "lmStandardCode": "Lm Standard Code",
+      "path": "Path",
+      "insertTs": "Insert Ts",
+      "lastUpdateTs": "Last Update Ts",
+      "model": "Model"
+    }
+  }
+}

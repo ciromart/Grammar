@@ -1,0 +1,27 @@
+{
+  "grammarEditorApp": {
+    "appConfig": {
+      "home": {
+        "title": "App Configs",
+        "createLabel": "Create a new App Config",
+        "createOrEditLabel": "Create or edit a App Config",
+        "notFound": "No App Configs found"
+      },
+      "created": "A new App Config is created with identifier {{ param }}",
+      "updated": "A App Config is updated with identifier {{ param }}",
+      "deleted": "A App Config is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete App Config {{ id }}?"
+      },
+      "detail": {
+        "title": "App Config"
+      },
+      "criticalWordsMaxFileSize": "Critical Words Max File Size",
+      "criticalWordsMaxWords": "Critical Words Max Words",
+      "additionalContextMaxFileSize": "Additional Context Max File Size",
+      "additionalContextMaxFileWords": "Additional Context Max File Words",
+      "minOccurencyContext": "Min Occurency Context",
+      "windowsMaxWords": "Windows Max Words"
+    }
+  }
+}

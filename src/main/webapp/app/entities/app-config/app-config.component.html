@@ -1,0 +1,67 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="grammarEditorApp.appConfig.home.title">App Configs</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-app-config" [routerLink]="['/app-config/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="grammarEditorApp.appConfig.home.createLabel">
+            Create a new App Config
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="appConfigs?.length === 0">
+        <span jhiTranslate="grammarEditorApp.appConfig.home.notFound">No appConfigs found</span>
+    </div>
+    <div class="table-responsive" *ngIf="appConfigs?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="grammarEditorApp.appConfig.criticalWordsMaxFileSize">Critical Words Max File Size</span></th>
+            <th><span jhiTranslate="grammarEditorApp.appConfig.criticalWordsMaxWords">Critical Words Max Words</span></th>
+            <th><span jhiTranslate="grammarEditorApp.appConfig.additionalContextMaxFileSize">Additional Context Max File Size</span></th>
+            <th><span jhiTranslate="grammarEditorApp.appConfig.additionalContextMaxFileWords">Additional Context Max File Words</span></th>
+            <th><span jhiTranslate="grammarEditorApp.appConfig.minOccurencyContext">Min Occurency Context</span></th>
+            <th><span jhiTranslate="grammarEditorApp.appConfig.windowsMaxWords">Windows Max Words</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let appConfig of appConfigs ;trackBy: trackId">
+                <td><a [routerLink]="['/app-config', appConfig.id, 'view' ]">{{appConfig.id}}</a></td>
+                <td>{{appConfig.criticalWordsMaxFileSize}}</td>
+                <td>{{appConfig.criticalWordsMaxWords}}</td>
+                <td>{{appConfig.additionalContextMaxFileSize}}</td>
+                <td>{{appConfig.additionalContextMaxFileWords}}</td>
+                <td>{{appConfig.minOccurencyContext}}</td>
+                <td>{{appConfig.windowsMaxWords}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/app-config', appConfig.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/app-config', appConfig.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/app-config', { outlets: { popup: appConfig.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{
+  "grammarEditorApp": {
+    "compilationLog": {
+      "home": {
+        "title": "Compilation Logs",
+        "createLabel": "Create a new Compilation Log",
+        "createOrEditLabel": "Create or edit a Compilation Log",
+        "notFound": "No Compilation Logs found"
+      },
+      "created": "A new Compilation Log is created with identifier {{ param }}",
+      "updated": "A Compilation Log is updated with identifier {{ param }}",
+      "deleted": "A Compilation Log is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Compilation Log {{ id }}?"
+      },
+      "detail": {
+        "title": "Compilation Log"
+      },
+      "insertTs": "Insert Ts",
+      "lastUpdatTs": "Last Updat Ts",
+      "status": "Status",
+      "rpkLink": "Rpk Link",
+      "compilationFile": "Compilation File",
+      "model": "Model"
+    }
+  }
+}

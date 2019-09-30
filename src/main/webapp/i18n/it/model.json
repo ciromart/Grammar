@@ -1,0 +1,27 @@
+{
+  "grammarEditorApp": {
+    "model": {
+      "home": {
+        "title": "Models",
+        "createLabel": "Genera un nuovo Model",
+        "createOrEditLabel": "Genera o modifica un Model",
+        "notFound": "No Models found"
+      },
+      "created": "&Egrave; stato generato un nuovo Model con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Model identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Model con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Model {{ id }}?"
+      },
+      "detail": {
+        "title": "Model"
+      },
+      "name": "Name",
+      "mailNetworkName": "Mail Network Name",
+      "insertTs": "Insert Ts",
+      "lastUpdateTs": "Last Update Ts",
+      "compilationLog": "Compilation Log",
+      "lmTemplate": "Lm Template"
+    }
+  }
+}

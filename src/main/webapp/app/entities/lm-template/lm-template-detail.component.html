@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="lmTemplate">
+            <h2><span jhiTranslate="grammarEditorApp.lmTemplate.detail.title">Lm Template</span> {{lmTemplate.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.name">Name</span></dt>
+                <dd>
+                    <span>{{lmTemplate.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.langCode">Lang Code</span></dt>
+                <dd>
+                    <span>{{lmTemplate.langCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.countryCode">Country Code</span></dt>
+                <dd>
+                    <span>{{lmTemplate.countryCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.lmStandardCode">Lm Standard Code</span></dt>
+                <dd>
+                    <span>{{lmTemplate.lmStandardCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.path">Path</span></dt>
+                <dd>
+                    <span>{{lmTemplate.path}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.insertTs">Insert Ts</span></dt>
+                <dd>
+                    <span>{{lmTemplate.insertTs}}</span>
+                </dd>
+                <dt><span jhiTranslate="grammarEditorApp.lmTemplate.lastUpdateTs">Last Update Ts</span></dt>
+                <dd>
+                    <span>{{lmTemplate.lastUpdateTs}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/lm-template', lmTemplate.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
