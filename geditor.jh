@@ -1,0 +1,51 @@
+entity LmTemplate {
+	id Long
+    name String
+    langCode Long
+    countryCode Long
+    lmStandardCode Long
+    path String
+    insertTs Instant
+    lastUpdateTs Instant
+}
+
+entity Model {
+	id Long
+    name String
+    mailNetworkName String
+    insertTs Instant
+    lastUpdateTs Instant
+}
+
+entity CompilationLog {
+	id Long
+    insertTs Instant
+    lastUpdatTs Instant
+    status String
+    rpkLink String
+}
+
+entity CompilationFile {
+	id Long
+    path String
+}
+
+entity AppConfig {
+	criticalWordsMaxFileSize Long
+    criticalWordsMaxWords Long
+    additionalContextMaxFileSize Long
+    additionalContextMaxFileWords Long
+    minOccurencyContext Long
+    windowsMaxWords Long
+}
+ relationship OneToMany {
+ 	LmTemplate to Model{lmTemplate}
+ }
+ 
+ relationship OneToMany {
+ 	Model to CompilationLog{model}
+ }
+ 
+ relationship OneToMany {
+ 	CompilationLog to CompilationFile {compilationLog}
+ }
