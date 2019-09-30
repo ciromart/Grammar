@@ -1,21 +1,9 @@
 package it.alma.geditor.web.rest;
 
-import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.CompilationLog;
+import it.alma.geditor.repository.CompilationLogRepository;
+import it.alma.geditor.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,10 +18,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.domain.CompilationLog;
-import it.alma.geditor.repository.CompilationLogRepository;
-import it.alma.geditor.web.rest.errors.ExceptionTranslator;
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link CompilationLogResource} REST controller.
@@ -43,9 +37,11 @@ public class CompilationLogResourceIT {
 
     private static final Instant DEFAULT_INSERT_TS = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_INSERT_TS = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_INSERT_TS = Instant.ofEpochMilli(-1L);
 
     private static final Instant DEFAULT_LAST_UPDAT_TS = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_UPDAT_TS = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant SMALLER_LAST_UPDAT_TS = Instant.ofEpochMilli(-1L);
 
     private static final String DEFAULT_STATUS = "AAAAAAAAAA";
     private static final String UPDATED_STATUS = "BBBBBBBBBB";
@@ -94,11 +90,11 @@ public class CompilationLogResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompilationLog createEntity(EntityManager em) {
-        CompilationLog compilationLog = new CompilationLog();
-        compilationLog.setInsertTs(DEFAULT_INSERT_TS);
-        compilationLog.setLastUpdatTs(DEFAULT_LAST_UPDAT_TS);
-        compilationLog.setStatus(DEFAULT_STATUS);
-        compilationLog.setRpkLink(DEFAULT_RPK_LINK);
+        CompilationLog compilationLog = new CompilationLog()
+            .insertTs(DEFAULT_INSERT_TS)
+            .lastUpdatTs(DEFAULT_LAST_UPDAT_TS)
+            .status(DEFAULT_STATUS)
+            .rpkLink(DEFAULT_RPK_LINK);
         return compilationLog;
     }
     /**
@@ -108,11 +104,11 @@ public class CompilationLogResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompilationLog createUpdatedEntity(EntityManager em) {
-        CompilationLog compilationLog = new CompilationLog();
-        compilationLog.setInsertTs(DEFAULT_INSERT_TS);
-        compilationLog.setLastUpdatTs(DEFAULT_LAST_UPDAT_TS);
-        compilationLog.setStatus(DEFAULT_STATUS);
-        compilationLog.setRpkLink(DEFAULT_RPK_LINK);
+        CompilationLog compilationLog = new CompilationLog()
+            .insertTs(UPDATED_INSERT_TS)
+            .lastUpdatTs(UPDATED_LAST_UPDAT_TS)
+            .status(UPDATED_STATUS)
+            .rpkLink(UPDATED_RPK_LINK);
         return compilationLog;
     }
 
@@ -216,10 +212,11 @@ public class CompilationLogResourceIT {
         CompilationLog updatedCompilationLog = compilationLogRepository.findById(compilationLog.getId()).get();
         // Disconnect from session so that the updates on updatedCompilationLog are not directly saved in db
         em.detach(updatedCompilationLog);
-        updatedCompilationLog.setInsertTs(DEFAULT_INSERT_TS);
-        updatedCompilationLog.setLastUpdatTs(DEFAULT_LAST_UPDAT_TS);
-        updatedCompilationLog.setStatus(DEFAULT_STATUS);
-        updatedCompilationLog.setRpkLink(DEFAULT_RPK_LINK);
+        updatedCompilationLog
+            .insertTs(UPDATED_INSERT_TS)
+            .lastUpdatTs(UPDATED_LAST_UPDAT_TS)
+            .status(UPDATED_STATUS)
+            .rpkLink(UPDATED_RPK_LINK);
 
         restCompilationLogMockMvc.perform(put("/api/compilation-logs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
