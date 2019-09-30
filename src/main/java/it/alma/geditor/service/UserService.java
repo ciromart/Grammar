@@ -74,7 +74,7 @@ public class UserService {
 
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmailIgnoreCase(mail)
-            .filter(User::isActivated)
+            .filter(User::getActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(Instant.now());
@@ -118,7 +118,7 @@ public class UserService {
     }
 
     private boolean removeNonActivatedUser(User existingUser){
-        if (existingUser.isActivated()) {
+        if (existingUser.getActivated()) {
              return false;
         }
         userRepository.delete(existingUser);
@@ -273,5 +273,4 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
-
 }
