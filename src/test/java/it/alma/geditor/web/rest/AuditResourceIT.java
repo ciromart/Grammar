@@ -1,12 +1,15 @@
 package it.alma.geditor.web.rest;
 
-import it.alma.geditor.GrammarEditorApp;
-import io.github.jhipster.config.JHipsterProperties;
-import it.alma.geditor.config.audit.AuditEventConverter;
-import it.alma.geditor.domain.PersistentAuditEvent;
-import it.alma.geditor.repository.PersistenceAuditEventRepository;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import it.alma.geditor.service.AuditEventService;
+import java.time.Instant;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -21,12 +24,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import io.github.jhipster.config.JHipsterProperties;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.config.audit.AuditEventConverter;
+import it.alma.geditor.domain.PersistentAuditEvent;
+import it.alma.geditor.repository.PersistenceAuditEventRepository;
+import it.alma.geditor.service.AuditEventService;
 
 /**
  * Integration tests for the {@link AuditResource} REST controller.

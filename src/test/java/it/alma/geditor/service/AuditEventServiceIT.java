@@ -1,18 +1,20 @@
 package it.alma.geditor.service;
 
-import it.alma.geditor.domain.PersistentAuditEvent;
-import it.alma.geditor.repository.PersistenceAuditEventRepository;
-import it.alma.geditor.GrammarEditorApp;
-import io.github.jhipster.config.JHipsterProperties;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import io.github.jhipster.config.JHipsterProperties;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.PersistentAuditEvent;
+import it.alma.geditor.repository.PersistenceAuditEventRepository;
 
 /**
  * Integration tests for {@link AuditEventService}.

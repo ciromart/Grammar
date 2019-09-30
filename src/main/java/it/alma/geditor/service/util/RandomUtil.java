@@ -1,8 +1,8 @@
 package it.alma.geditor.service.util;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import java.security.SecureRandom;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * Utility class for generating random Strings.

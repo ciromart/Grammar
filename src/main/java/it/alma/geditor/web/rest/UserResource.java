@@ -1,19 +1,11 @@
 package it.alma.geditor.web.rest;
 
-import it.alma.geditor.config.Constants;
-import it.alma.geditor.domain.User;
-import it.alma.geditor.repository.UserRepository;
-import it.alma.geditor.security.AuthoritiesConstants;
-import it.alma.geditor.service.MailService;
-import it.alma.geditor.service.UserService;
-import it.alma.geditor.service.dto.UserDTO;
-import it.alma.geditor.web.rest.errors.BadRequestAlertException;
-import it.alma.geditor.web.rest.errors.EmailAlreadyUsedException;
-import it.alma.geditor.web.rest.errors.LoginAlreadyUsedException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
-import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +16,29 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import it.alma.geditor.config.Constants;
+import it.alma.geditor.domain.User;
+import it.alma.geditor.repository.UserRepository;
+import it.alma.geditor.security.AuthoritiesConstants;
+import it.alma.geditor.service.MailService;
+import it.alma.geditor.service.UserService;
+import it.alma.geditor.service.dto.UserDTO;
+import it.alma.geditor.web.rest.errors.BadRequestAlertException;
+import it.alma.geditor.web.rest.errors.EmailAlreadyUsedException;
+import it.alma.geditor.web.rest.errors.LoginAlreadyUsedException;
 
 /**
  * REST controller for managing users.

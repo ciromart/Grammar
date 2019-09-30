@@ -1,9 +1,11 @@
 package it.alma.geditor.security.jwt;
 
-import it.alma.geditor.security.AuthoritiesConstants;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.security.Key;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +20,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import it.alma.geditor.security.AuthoritiesConstants;
 
 public class TokenProviderTest {
 

@@ -36,9 +36,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mariadb://localhost:3306/GrammarEditor?useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password:
+    url: jdbc:mariadb://10.121.127.85:3306/grammar?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: grammar_user
+    password: grammar_password
     hikari:
       poolName: Hikari
       auto-commit: false

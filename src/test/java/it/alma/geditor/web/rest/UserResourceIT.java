@@ -1,16 +1,24 @@
 package it.alma.geditor.web.rest;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.domain.Authority;
-import it.alma.geditor.domain.User;
-import it.alma.geditor.repository.UserRepository;
-import it.alma.geditor.security.AuthoritiesConstants;
-import it.alma.geditor.service.MailService;
-import it.alma.geditor.service.UserService;
-import it.alma.geditor.service.dto.UserDTO;
-import it.alma.geditor.service.mapper.UserMapper;
-import it.alma.geditor.web.rest.errors.ExceptionTranslator;
-import it.alma.geditor.web.rest.vm.ManagedUserVM;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,15 +31,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.Authority;
+import it.alma.geditor.domain.User;
+import it.alma.geditor.repository.UserRepository;
+import it.alma.geditor.security.AuthoritiesConstants;
+import it.alma.geditor.service.MailService;
+import it.alma.geditor.service.UserService;
+import it.alma.geditor.service.dto.UserDTO;
+import it.alma.geditor.service.mapper.UserMapper;
+import it.alma.geditor.web.rest.errors.ExceptionTranslator;
+import it.alma.geditor.web.rest.vm.ManagedUserVM;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.

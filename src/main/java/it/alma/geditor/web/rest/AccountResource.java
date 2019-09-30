@@ -1,6 +1,23 @@
 package it.alma.geditor.web.rest;
 
 
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
 import it.alma.geditor.domain.User;
 import it.alma.geditor.repository.UserRepository;
 import it.alma.geditor.security.SecurityUtils;
@@ -8,19 +25,12 @@ import it.alma.geditor.service.MailService;
 import it.alma.geditor.service.UserService;
 import it.alma.geditor.service.dto.PasswordChangeDTO;
 import it.alma.geditor.service.dto.UserDTO;
-import it.alma.geditor.web.rest.errors.*;
+import it.alma.geditor.web.rest.errors.EmailAlreadyUsedException;
+import it.alma.geditor.web.rest.errors.EmailNotFoundException;
+import it.alma.geditor.web.rest.errors.InvalidPasswordException;
+import it.alma.geditor.web.rest.errors.LoginAlreadyUsedException;
 import it.alma.geditor.web.rest.vm.KeyAndPasswordVM;
 import it.alma.geditor.web.rest.vm.ManagedUserVM;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.*;
 
 /**
  * REST controller for managing the current user's account.

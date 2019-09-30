@@ -1,9 +1,16 @@
 package it.alma.geditor.repository;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.config.Constants;
-import it.alma.geditor.config.audit.AuditEventConverter;
-import it.alma.geditor.domain.PersistentAuditEvent;
+import static it.alma.geditor.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +21,10 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static it.alma.geditor.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.config.Constants;
+import it.alma.geditor.config.audit.AuditEventConverter;
+import it.alma.geditor.domain.PersistentAuditEvent;
 
 /**
  * Integration tests for {@link CustomAuditEventRepository}.

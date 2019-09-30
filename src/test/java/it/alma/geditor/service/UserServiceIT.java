@@ -1,11 +1,13 @@
 package it.alma.geditor.service;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.config.Constants;
-import it.alma.geditor.domain.User;
-import it.alma.geditor.repository.UserRepository;
-import it.alma.geditor.service.dto.UserDTO;
-import it.alma.geditor.service.util.RandomUtil;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +21,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.config.Constants;
+import it.alma.geditor.domain.User;
+import it.alma.geditor.repository.UserRepository;
+import it.alma.geditor.service.dto.UserDTO;
+import it.alma.geditor.service.util.RandomUtil;
 
 /**
  * Integration tests for {@link UserService}.

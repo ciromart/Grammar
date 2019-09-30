@@ -1,17 +1,17 @@
 package it.alma.geditor.service.dto;
 
-import it.alma.geditor.config.Constants;
-
-import it.alma.geditor.domain.Authority;
-import it.alma.geditor.domain.User;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import it.alma.geditor.config.Constants;
+import it.alma.geditor.domain.Authority;
+import it.alma.geditor.domain.User;
 
 /**
  * A DTO representing a user, with his authorities.

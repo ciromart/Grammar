@@ -1,8 +1,9 @@
 package it.alma.geditor.service;
 
-import io.github.jhipster.config.JHipsterProperties;
-import it.alma.geditor.config.audit.AuditEventConverter;
-import it.alma.geditor.repository.PersistenceAuditEventRepository;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -12,9 +13,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
+import io.github.jhipster.config.JHipsterProperties;
+import it.alma.geditor.config.audit.AuditEventConverter;
+import it.alma.geditor.repository.PersistenceAuditEventRepository;
 
 /**
  * Service for managing audit events.

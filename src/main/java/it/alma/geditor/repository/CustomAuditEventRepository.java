@@ -1,8 +1,9 @@
 package it.alma.geditor.repository;
 
-import it.alma.geditor.config.Constants;
-import it.alma.geditor.config.audit.AuditEventConverter;
-import it.alma.geditor.domain.PersistentAuditEvent;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.*;
+import it.alma.geditor.config.Constants;
+import it.alma.geditor.config.audit.AuditEventConverter;
+import it.alma.geditor.domain.PersistentAuditEvent;
 
 /**
  * An implementation of Spring Boot's {@link AuditEventRepository}.

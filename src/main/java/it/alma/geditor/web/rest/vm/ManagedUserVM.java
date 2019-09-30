@@ -1,7 +1,8 @@
 package it.alma.geditor.web.rest.vm;
 
-import it.alma.geditor.service.dto.UserDTO;
 import javax.validation.constraints.Size;
+
+import it.alma.geditor.service.dto.UserDTO;
 
 /**
  * View Model extending the UserDTO, which is meant to be used in the user management UI.

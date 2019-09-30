@@ -1,12 +1,13 @@
 package it.alma.geditor.repository;
 
-import it.alma.geditor.domain.PersistentAuditEvent;
+import java.time.Instant;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.Instant;
-import java.util.List;
+import it.alma.geditor.domain.PersistentAuditEvent;
 
 /**
  * Spring Data JPA repository for the {@link PersistentAuditEvent} entity.

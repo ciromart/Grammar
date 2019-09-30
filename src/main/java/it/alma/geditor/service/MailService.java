@@ -1,11 +1,8 @@
 package it.alma.geditor.service;
 
-import it.alma.geditor.domain.User;
-
-import io.github.jhipster.config.JHipsterProperties;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+
 import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
@@ -17,6 +14,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import io.github.jhipster.config.JHipsterProperties;
+import it.alma.geditor.domain.User;
 
 /**
  * Service for sending emails.

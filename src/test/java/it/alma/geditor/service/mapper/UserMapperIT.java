@@ -1,21 +1,22 @@
 package it.alma.geditor.service.mapper;
 
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.domain.User;
-import it.alma.geditor.service.dto.UserDTO;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.User;
+import it.alma.geditor.service.dto.UserDTO;
 
 /**
  * Integration tests for {@link UserMapper}.

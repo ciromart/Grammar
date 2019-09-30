@@ -1,14 +1,12 @@
 package it.alma.geditor.service;
 
-import it.alma.geditor.config.Constants;
-import it.alma.geditor.domain.Authority;
-import it.alma.geditor.domain.User;
-import it.alma.geditor.repository.AuthorityRepository;
-import it.alma.geditor.repository.UserRepository;
-import it.alma.geditor.security.AuthoritiesConstants;
-import it.alma.geditor.security.SecurityUtils;
-import it.alma.geditor.service.dto.UserDTO;
-import it.alma.geditor.service.util.RandomUtil;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
+import it.alma.geditor.config.Constants;
+import it.alma.geditor.domain.Authority;
+import it.alma.geditor.domain.User;
+import it.alma.geditor.repository.AuthorityRepository;
+import it.alma.geditor.repository.UserRepository;
+import it.alma.geditor.security.AuthoritiesConstants;
+import it.alma.geditor.security.SecurityUtils;
+import it.alma.geditor.service.dto.UserDTO;
+import it.alma.geditor.service.util.RandomUtil;
 
 /**
  * Service class for managing users.

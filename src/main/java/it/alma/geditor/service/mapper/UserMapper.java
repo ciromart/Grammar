@@ -1,13 +1,16 @@
 package it.alma.geditor.service.mapper;
 
-import it.alma.geditor.domain.Authority;
-import it.alma.geditor.domain.User;
-import it.alma.geditor.service.dto.UserDTO;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import it.alma.geditor.domain.Authority;
+import it.alma.geditor.domain.User;
+import it.alma.geditor.service.dto.UserDTO;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.
