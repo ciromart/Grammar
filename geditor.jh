@@ -51,3 +51,15 @@ entity AppConfig {
  relationship OneToMany {
  	CompilationLog to CompilationFile {compilationLog}
  }
+ 
+relationship ManyToMany {
+ 	User to AppConfig {appConfigs}
+ }
+ 
+ relationship ManyToMany {
+ 	User to LmTemplate {lmTemplates}
+ }
+ 
+  relationship ManyToMany {
+ 	User to Model {models}
+ }
