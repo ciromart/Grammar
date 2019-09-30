@@ -1,19 +1,9 @@
 package it.alma.geditor.web.rest;
 
-import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import it.alma.geditor.GrammarEditorApp;
+import it.alma.geditor.domain.AppConfig;
+import it.alma.geditor.repository.AppConfigRepository;
+import it.alma.geditor.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,10 +18,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import it.alma.geditor.GrammarEditorApp;
-import it.alma.geditor.domain.AppConfig;
-import it.alma.geditor.repository.AppConfigRepository;
-import it.alma.geditor.web.rest.errors.ExceptionTranslator;
+import javax.persistence.EntityManager;
+import java.util.List;
+
+import static it.alma.geditor.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link AppConfigResource} REST controller.
@@ -41,21 +35,27 @@ public class AppConfigResourceIT {
 
     private static final Long DEFAULT_CRITICAL_WORDS_MAX_FILE_SIZE = 1L;
     private static final Long UPDATED_CRITICAL_WORDS_MAX_FILE_SIZE = 2L;
+    private static final Long SMALLER_CRITICAL_WORDS_MAX_FILE_SIZE = 1L - 1L;
 
     private static final Long DEFAULT_CRITICAL_WORDS_MAX_WORDS = 1L;
     private static final Long UPDATED_CRITICAL_WORDS_MAX_WORDS = 2L;
+    private static final Long SMALLER_CRITICAL_WORDS_MAX_WORDS = 1L - 1L;
 
     private static final Long DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_SIZE = 1L;
     private static final Long UPDATED_ADDITIONAL_CONTEXT_MAX_FILE_SIZE = 2L;
+    private static final Long SMALLER_ADDITIONAL_CONTEXT_MAX_FILE_SIZE = 1L - 1L;
 
     private static final Long DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_WORDS = 1L;
     private static final Long UPDATED_ADDITIONAL_CONTEXT_MAX_FILE_WORDS = 2L;
+    private static final Long SMALLER_ADDITIONAL_CONTEXT_MAX_FILE_WORDS = 1L - 1L;
 
     private static final Long DEFAULT_MIN_OCCURENCY_CONTEXT = 1L;
     private static final Long UPDATED_MIN_OCCURENCY_CONTEXT = 2L;
+    private static final Long SMALLER_MIN_OCCURENCY_CONTEXT = 1L - 1L;
 
     private static final Long DEFAULT_WINDOWS_MAX_WORDS = 1L;
     private static final Long UPDATED_WINDOWS_MAX_WORDS = 2L;
+    private static final Long SMALLER_WINDOWS_MAX_WORDS = 1L - 1L;
 
     @Autowired
     private AppConfigRepository appConfigRepository;
@@ -98,13 +98,13 @@ public class AppConfigResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AppConfig createEntity(EntityManager em) {
-        AppConfig appConfig = new AppConfig();
-        appConfig.setCriticalWordsMaxFileSize(DEFAULT_CRITICAL_WORDS_MAX_FILE_SIZE);
-        appConfig.setCriticalWordsMaxWords(DEFAULT_CRITICAL_WORDS_MAX_WORDS);
-        appConfig.setAdditionalContextMaxFileSize(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_SIZE);
-        appConfig.setAdditionalContextMaxFileWords(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_WORDS);
-        appConfig.setMinOccurencyContext(DEFAULT_MIN_OCCURENCY_CONTEXT);
-        appConfig.setWindowsMaxWords(DEFAULT_WINDOWS_MAX_WORDS);
+        AppConfig appConfig = new AppConfig()
+            .criticalWordsMaxFileSize(DEFAULT_CRITICAL_WORDS_MAX_FILE_SIZE)
+            .criticalWordsMaxWords(DEFAULT_CRITICAL_WORDS_MAX_WORDS)
+            .additionalContextMaxFileSize(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_SIZE)
+            .additionalContextMaxFileWords(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_WORDS)
+            .minOccurencyContext(DEFAULT_MIN_OCCURENCY_CONTEXT)
+            .windowsMaxWords(DEFAULT_WINDOWS_MAX_WORDS);
         return appConfig;
     }
     /**
@@ -114,13 +114,13 @@ public class AppConfigResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AppConfig createUpdatedEntity(EntityManager em) {
-        AppConfig appConfig = new AppConfig();
-        appConfig.setCriticalWordsMaxFileSize(DEFAULT_CRITICAL_WORDS_MAX_FILE_SIZE);
-        appConfig.setCriticalWordsMaxWords(DEFAULT_CRITICAL_WORDS_MAX_WORDS);
-        appConfig.setAdditionalContextMaxFileSize(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_SIZE);
-        appConfig.setAdditionalContextMaxFileWords(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_WORDS);
-        appConfig.setMinOccurencyContext(DEFAULT_MIN_OCCURENCY_CONTEXT);
-        appConfig.setWindowsMaxWords(DEFAULT_WINDOWS_MAX_WORDS);
+        AppConfig appConfig = new AppConfig()
+            .criticalWordsMaxFileSize(UPDATED_CRITICAL_WORDS_MAX_FILE_SIZE)
+            .criticalWordsMaxWords(UPDATED_CRITICAL_WORDS_MAX_WORDS)
+            .additionalContextMaxFileSize(UPDATED_ADDITIONAL_CONTEXT_MAX_FILE_SIZE)
+            .additionalContextMaxFileWords(UPDATED_ADDITIONAL_CONTEXT_MAX_FILE_WORDS)
+            .minOccurencyContext(UPDATED_MIN_OCCURENCY_CONTEXT)
+            .windowsMaxWords(UPDATED_WINDOWS_MAX_WORDS);
         return appConfig;
     }
 
@@ -230,12 +230,13 @@ public class AppConfigResourceIT {
         AppConfig updatedAppConfig = appConfigRepository.findById(appConfig.getId()).get();
         // Disconnect from session so that the updates on updatedAppConfig are not directly saved in db
         em.detach(updatedAppConfig);
-        updatedAppConfig.setCriticalWordsMaxFileSize(DEFAULT_CRITICAL_WORDS_MAX_FILE_SIZE);
-        updatedAppConfig.setCriticalWordsMaxWords(DEFAULT_CRITICAL_WORDS_MAX_WORDS);
-        updatedAppConfig.setAdditionalContextMaxFileSize(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_SIZE);
-        updatedAppConfig.setAdditionalContextMaxFileWords(DEFAULT_ADDITIONAL_CONTEXT_MAX_FILE_WORDS);
-        updatedAppConfig.setMinOccurencyContext(DEFAULT_MIN_OCCURENCY_CONTEXT);
-        updatedAppConfig.setWindowsMaxWords(DEFAULT_WINDOWS_MAX_WORDS);
+        updatedAppConfig
+            .criticalWordsMaxFileSize(UPDATED_CRITICAL_WORDS_MAX_FILE_SIZE)
+            .criticalWordsMaxWords(UPDATED_CRITICAL_WORDS_MAX_WORDS)
+            .additionalContextMaxFileSize(UPDATED_ADDITIONAL_CONTEXT_MAX_FILE_SIZE)
+            .additionalContextMaxFileWords(UPDATED_ADDITIONAL_CONTEXT_MAX_FILE_WORDS)
+            .minOccurencyContext(UPDATED_MIN_OCCURENCY_CONTEXT)
+            .windowsMaxWords(UPDATED_WINDOWS_MAX_WORDS);
 
         restAppConfigMockMvc.perform(put("/api/app-configs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
